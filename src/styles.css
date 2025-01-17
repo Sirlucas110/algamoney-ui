@@ -1,0 +1,103 @@
+/* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
+@import 'primeflex/primeflex.css';
+@import "primeicons/primeicons.css";
+
+
+
+
+/* You can add global styles to this file, and also import other style files */
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #404C51;
+}
+
+label {
+  font-weight: bold;
+  
+}
+
+.input-ate{
+  margin: 0px 5px;
+}
+
+
+
+@media (min-width: 1200px) {
+  .container {
+      width: 1170px;
+      margin: 0 auto;
+  }
+}
+
+.container {
+  padding: 0.5rem; /* Adiciona espaçamento interno ao container */
+}
+
+
+
+.col-12 {
+  margin-bottom: 0.5rem; /* Adiciona espaço entre as colunas */
+}
+
+.p-button{
+  margin-right: .25em;
+}
+
+a{
+  text-decoration: none;
+}
+
+.p-message .p-message-wrapper{
+  padding: 1rem 1rem;
+}
+
+.label {
+  margin: 0.5em;
+}
+
+th{
+  text-align: center !important;
+}
+td{
+  padding: 5px;
+}
+
+@media (min-width: 40em) {
+  .col-valor-header {
+    width: 120px;
+    text-align: center !important;
+  }
+
+  .col-valor-content {
+    text-align: right !important;
+  }
+
+  .col-data-header {
+    width: 120px;
+  }
+
+  .col-data-content {
+    text-align: center !important;
+  }
+
+  .col-acoes-header,
+  .col-acoes {
+    width: 115px;
+    text-align: center !important;
+  }
+
+}
+
+.col-status-body a{
+  text-decoration: none;
+  color: #4b5563;
+}
+
+.col-acoes .p-button {
+  margin: 1px;
+  
+}
