@@ -30,15 +30,17 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": [],
+            "scripts": [
+               "node_modules/chart.js/dist/chart.js"
+            ],
             "server": "src/main.server.ts",
-            "prerender": true,
-            "ssr": {
-              "entry": "server.ts"
-            }
+            "prerender": false,
+            "ssr": false
           },
           "configurations": {
             "production": {
+              "ssr": false,
+              "prerender": false,
               "budgets": [
                 {
                   "type": "initial",
@@ -54,6 +56,8 @@
               "outputHashing": "all"
             },
             "development": {
+              "ssr": false,
+              "prerender": false,
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true

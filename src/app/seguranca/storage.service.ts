@@ -4,26 +4,15 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class StorageService {
-  isBrowser(): boolean {
-    return typeof window !== 'undefined';
-  }
-
   setItem(key: string, value: string): void {
-    if (this.isBrowser()) {
-      localStorage.setItem(key, value);
-    }
+    localStorage.setItem(key, value);
   }
 
   getItem(key: string): string | null {
-    if (this.isBrowser()) {
-      return localStorage.getItem(key);
-    }
-    return null;
+    return localStorage.getItem(key);
   }
 
   removeItem(key: string): void {
-    if (this.isBrowser()) {
-      localStorage.removeItem(key);
-    }
+    localStorage.removeItem(key);
   }
 }

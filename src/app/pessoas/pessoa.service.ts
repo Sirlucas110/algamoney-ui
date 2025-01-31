@@ -6,6 +6,7 @@ import { environment } from '../../environments/environments';
 
 
 
+
 export class PessoaFiltro{
     nome: string = ''; // Filtro pelo nome da pessoa
     pagina: number = 0; // Número da página para paginação (começa na página 0).
@@ -25,15 +26,19 @@ interface PessoasResponse {
 
 export class PessoaService {
 
-  pessoasUrl = 'http://localhost:8080/pessoas';
+  pessoasUrl: string
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
   ) {
     this.pessoasUrl = `${environment.apiUrl}/pessoas`
   }
 
   pesquisar(filtro: PessoaFiltro): Observable<any>{
+    
+  
+
+
       let params = new HttpParams()
         .set('page', filtro.pagina)
         .set('size', filtro.itensPorPagina)
@@ -51,35 +56,46 @@ export class PessoaService {
   }
 
   adicionarPessoas(pessoas: Pessoa): Observable<Pessoa>{
+    
+  
 
     return this.http.post<Pessoa>(this.pessoasUrl, pessoas)
   }
 
   listarTodas(): Observable<any[]>{
+    
+  
 
     return this.http.get<any[]>(this.pessoasUrl)
 
   }
 
   atualizarPessoa(pessoa: Pessoa): Observable<Pessoa>{
-
+    
+  
 
     return this.http.put<Pessoa>(`${this.pessoasUrl}/${pessoa.codigo}`, pessoa)
   }
 
   buscaPorCodigo(codigo: number): Observable<Pessoa>{
+
+    
   
     return this.http.get<Pessoa>(`${this.pessoasUrl}/${codigo}`)
   }
   
   excluirPessoa(codigo: number): Observable<any>{
+    
+  
+    
 
     return this.http.delete(`${this.pessoasUrl}/${codigo}`)
 
   }
 
   atualizarStatus(codigo: number, ativo: boolean): Observable<any>{
-
+    
+  
 
     return this.http.put(`${this.pessoasUrl}/${codigo}/ativo`, ativo)
 

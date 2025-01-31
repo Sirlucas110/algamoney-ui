@@ -1,23 +1,18 @@
-import { Component } from '@angular/core';
 import { CommonModule, DatePipe, registerLocaleData } from '@angular/common';
-import localePt from '@angular/common/locales/pt';
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import localePt from '@angular/common/locales/pt';
+import { Component } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 
 import { NavbarComponent } from "./core/navbar/navbar.component";
 
-import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
 
 
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ErrorHandlerService } from './core/error-handler.service';
-import { MoneyHttpInterceptor } from './seguranca/money-http';
-
-
-
-
 
 // Factory para carregar os arquivos de tradução
 export function HttpLoaderFactory(http: HttpClient) {
@@ -35,8 +30,8 @@ registerLocaleData(localePt, 'pt-BR')
     ToastModule,
     ConfirmDialogModule,
     RouterOutlet,
-],
-  providers: [MessageService, ConfirmationService, ErrorHandlerService, DatePipe, {provide: HTTP_INTERCEPTORS, useClass:  MoneyHttpInterceptor, multi: true }], // Garantir que DatePipe está aqui
+  ],
+  providers: [MessageService, ConfirmationService, ErrorHandlerService, DatePipe], // Garantir que DatePipe está aqui
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -47,8 +42,7 @@ export class AppComponent {
   constructor(
     private config: PrimeNGConfig,
     private router: Router
-  )
-    {}
+  ) { }
 
   ngOnInit() {
     this.config.setTranslation({
@@ -62,5 +56,10 @@ export class AppComponent {
       today: 'Hoje',
       weekHeader: 'Sem'
     });
+  }
+
+
+  exibindoNavBar(){
+    return this.router.url !== '/login';
   }
 }

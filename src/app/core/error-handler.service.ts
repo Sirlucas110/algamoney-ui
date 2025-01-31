@@ -1,12 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { Router } from '@angular/router';
 import { NotAuthenticatedError } from '../seguranca/money-http';
-import { AuthService } from '../seguranca/auth.service';
-
-
-
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,36 +10,34 @@ import { AuthService } from '../seguranca/auth.service';
 export class ErrorHandlerService {
 
   constructor(
-    private auth: AuthService,
     private messageService: MessageService,
+    private router: Router
   ) { }
-  
-  
-  handle(errorResponse: any){
+
+
+  handle(errorResponse: any) {
     let msg: string
 
-    if (typeof errorResponse === 'string'){
+    if (typeof errorResponse === 'string') {
       msg = errorResponse;
-    } else if(errorResponse instanceof NotAuthenticatedError) {
-      console.log('errorResponse', errorResponse)
-      msg = 'Sua sessão expirou';
-      this.auth.login()
+    } else if (errorResponse instanceof NotAuthenticatedError) {
+      this.router.navigate(['/login'])
+      this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Sua sessão expirou' });
+      return
     }
-    
-    else if(errorResponse instanceof HttpErrorResponse && errorResponse.status >= 400 && errorResponse.status <= 499){
+
+    else if (errorResponse instanceof HttpErrorResponse && errorResponse.status >= 400 && errorResponse.status <= 499) {
       msg = 'Ocorreu um erro ao processar a sua solicitação'
 
-      if(errorResponse.status === 403){
+      if (errorResponse.status === 403) {
         msg = 'Você não tem permissão para executar esta ação';
       }
 
       try {
         msg = errorResponse.error[0].mensagemUsuario
-      } catch (e){}
+      } catch (e) { }
 
-      console.log('Ocorreu erro', errorResponse)
-
-    }else {
+    } else {
       msg = 'Erro ao processar serviço remoto. Tente Novamente.'
       console.error('Ocorreu um erro', errorResponse)
     }

@@ -1,34 +1,21 @@
-import { CanActivateFn, Router } from '@angular/router';
-import { AuthService } from './auth.service';
 import { inject } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivateFn, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { AuthService } from './auth.service';
+import { NotAuthenticatedError } from './money-http';
 
-export const authGuard: CanActivateFn = (route, state) => {
-  const auth = inject(AuthService);
+export const authGuard: CanActivateFn = (route) => {
+  const authService = inject(AuthService);
   const router = inject(Router);
-
-  if (auth.isAccessTokenInvalido()) {
-    return auth.obterNovoAccessToken().pipe(
-      switchMap(() => {
-        if (auth.isAccessTokenInvalido()) {
-          router.navigate(['/login'])
-          return of(false);
-        }
-        return verificarPermissao(route, auth, router);
-      }),
-      catchError(() => {
-        auth.login();
-        return of(false);
-      })
-    );
-  }
-
-  return verificarPermissao(route, auth, router);
-};
+  if (!authService.isTokenPresent()) throw new NotAuthenticatedError()
+  if (!authService.isAccessTokenInvalido()) return verificarPermissao(route, authService, router)
+  return authService.refreshToken().pipe(() => {
+    return verificarPermissao(route, authService, router)
+  })
+}
 
 // Função auxiliar para verificar permissões
-function verificarPermissao(route: any, auth: AuthService, router: Router): Observable<boolean> {
+function verificarPermissao(route: ActivatedRouteSnapshot, auth: AuthService, router: Router): Observable<boolean> {
   if (route.data?.['roles'] && !auth.temQualquerPermissao(route.data['roles'])) {
     router.navigate(['/nao-autorizado']);
     return of(false);

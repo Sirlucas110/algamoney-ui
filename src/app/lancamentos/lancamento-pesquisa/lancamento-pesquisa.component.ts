@@ -48,10 +48,6 @@ export class LancamentoPesquisaComponent {
     this.title.setTitle('Pesquisa de lançamentos')
   }
 
-  /*naoTemPermissao(permissao: string) {
-    return !this.auth.temPermissao(permissao);
-  }*/
-
   pesquisar(pagina: number = 0){ 
     this.filtro.pagina = pagina;
     this.lancamentoService.pesquisar(this.filtro).pipe(

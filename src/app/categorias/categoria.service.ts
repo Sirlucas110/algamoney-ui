@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environments';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -15,6 +16,8 @@ export class CategoriaService {
    }
 
   listarCategorias(): Observable<any[]>{
+   
+  
 
     return this.http.get<any[]>(this.categoriasUrl)
 

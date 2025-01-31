@@ -6,64 +6,76 @@ import { PaginaNaoEncontradaComponent } from './core/pagina-nao-encontrada.compo
 import { PessoaCadastroComponent } from './pessoas/pessoa-cadastro/pessoa-cadastro.component';
 import { NaoAutorizadoComponent } from './core/nao-autorizado.component';
 import { authGuard } from './seguranca/auth.guard';
-import { AuthorizedComponent } from './seguranca/authorized/authorized.component';
 import { LoginComponent } from './seguranca/login/login.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { RelatorioLancamentosComponent } from './relatorios/relatorio-lancamentos/relatorio-lancamentos.component';
+
 
 export const routes: Routes = [
 
-    {path: '', redirectTo: 'lancamentos', pathMatch: 'full'},
-    {
-        path: 'login', component: LoginComponent
-    },
+    { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
 
     {
-        path: 'lancamentos', 
-        component: LancamentoPesquisaComponent, 
+        path: 'login', component: LoginComponent,
+    },
+    {
+        path: 'dashboard',
+        component: DashboardComponent,
+        canActivate: [authGuard],
+        data: {roles: ['ROLE_PESQUISAR_LANCAMENTO']}
+    },
+    {
+        path: 'lancamentos',
+        component: LancamentoPesquisaComponent,
         canActivate: [authGuard],
         data: { roles: ['ROLE_PESQUISAR_LANCAMENTO'] }
     },
+    
+
     {
-        path: 'lancamentos/novo', 
+        path: 'relatorios/lancamentos',
+        component: RelatorioLancamentosComponent,
+        canActivate: [authGuard],
+        data: {roles: ['ROLE_PESQUISAR_LANCAMENTO']}
+    },
+
+    {
+        path: 'lancamentos/novo',
         component: LancamentoCadastroComponent,
         canActivate: [authGuard],
         data: { roles: ['ROLE_CADASTRAR_LANCAMENTO'] }
-        
+
     },
     {
-        path: 'lancamentos/:codigo', 
+        path: 'lancamentos/:codigo',
         component: LancamentoCadastroComponent,
         canActivate: [authGuard],
         data: { roles: ['ROLE_CADASTRAR_LANCAMENTO'] }
     },
     {
-        path: 'pessoas', 
+        path: 'pessoas',
         component: PessoaPesquisaComponent,
         canActivate: [authGuard],
         data: { roles: ['ROLE_PESQUISAR_PESSOA'] }
     },
     {
-        path: 'pessoas/novo', 
+        path: 'pessoas/novo',
         component: PessoaCadastroComponent,
         canActivate: [authGuard],
         data: { roles: ['ROLE_CADASTRAR_PESSOA'] }
 
     },
     {
-        path: 'pessoas/:codigo', 
+        path: 'pessoas/:codigo',
         component: PessoaCadastroComponent,
         canActivate: [authGuard],
         data: { roles: ['ROLE_CADASTRAR_PESSOA'] }
     },
     {
-        path: 'authorized',
-        component: AuthorizedComponent 
-    },
-   
-    {
-        path: 'nao-autorizado', 
+        path: 'nao-autorizado',
         component: NaoAutorizadoComponent,
         canActivate: [authGuard]
     },
-    {path: '**', component: PaginaNaoEncontradaComponent}
-    
+    { path: '**', component: PaginaNaoEncontradaComponent }
+
 ];

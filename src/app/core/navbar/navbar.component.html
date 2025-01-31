@@ -9,8 +9,10 @@
     
     <ul class="navbar-menu" [hidden]="!exibindoMenu">
         <li class="navbar-usuario">{{ usuarioLogado }}</li>
+        <li class="navbar-menuitem" routerLinkActive="ativo"><a routerLink="/dashboard">Dashboard</a></li>
         <li class="navbar-menuitem" routerLinkActive="ativo"  ><a routerLink="/lancamentos">Lancamento</a></li>
         <li class="navbar-menuitem" routerLinkActive="ativo" ><a routerLink="/pessoas">Pessoa</a></li>
-        <li class="navbar-menuitem"><a href="#" >Logout</a></li>       
+        <li class="navbar-menuitem" routerLinkActive="ativo"><a routerLink="/relatorios/lancamentos">Relatórios</a></li>
+        <li class="navbar-menuitem"><a href="javascript:;" (click)="logout()">Logout</a></li>       
     </ul>  
 </nav>

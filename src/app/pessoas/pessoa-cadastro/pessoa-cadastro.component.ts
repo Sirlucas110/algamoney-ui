@@ -2,28 +2,35 @@ import { Component, ErrorHandler } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { InputMaskModule } from 'primeng/inputmask';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormControl, FormsModule, NgForm } from '@angular/forms';
 import { MessageComponent } from "../../shared/message/message.component";
 import { MessageService } from 'primeng/api';
-import { Pessoa } from '../../core/model';
+import { Contato, Pessoa } from '../../core/model';
 import { PessoaService } from '../pessoa.service';
 import { catchError, EMPTY, filter } from 'rxjs';
 import { ErrorHandlerService } from '../../core/error-handler.service';
 import { ViaCepService } from '../../endereco/via-cep.service';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { PanelModule } from 'primeng/panel';
+import { TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
+import { CommonModule } from '@angular/common';
+import { DialogModule } from 'primeng/dialog';
+import { PessoaCadastroContatoComponent } from "../pessoa-cadastro-contato/pessoa-cadastro-contato.component";
 
 @Component({
   selector: 'app-pessoa-cadastro',
   standalone: true,
-  imports: [InputTextModule, ButtonModule, InputMaskModule, FormsModule, MessageComponent, RouterLink],
+  imports: [InputTextModule, ButtonModule, InputMaskModule, FormsModule, MessageComponent, RouterLink, PanelModule, TableModule, TooltipModule, CommonModule, DialogModule, PessoaCadastroContatoComponent],
   templateUrl: './pessoa-cadastro.component.html',
   styleUrl: './pessoa-cadastro.component.css'
 })
 export class PessoaCadastroComponent {
   
-  pessoas = new Pessoa()
-
+  pessoas = new Pessoa();
+  
+  
   constructor(
     private messageService: MessageService,
     private errorHandler: ErrorHandlerService,
@@ -33,20 +40,22 @@ export class PessoaCadastroComponent {
     private route: ActivatedRoute,
     private router: Router
   ) { }
-
   
-
+  
+  
   ngOnInit(): void {
     const codigoPessoa = this.route.snapshot.params['codigo']
-
+    
     this.title.setTitle('Nova Pessoa')
-
+    
     if (codigoPessoa && codigoPessoa !== 'novo') {
       this.carregarPessoas(codigoPessoa)
     }
-
+    
   }
-
+  
+  
+  
   get editando() {
     return Boolean(this.pessoas.codigo)
   }
