@@ -107,6 +107,14 @@ export class LancamentoCadastroComponent {
     this.uploadEmAndamento = false
   }
 
+
+  removerAnexo(){
+    this.formulario.patchValue({
+      anexo: null,
+      urlAnexo: null,
+    })
+  }
+
   get nomeAnexo(){
     const nome = this.formulario.get('anexo')?.value
     console.log(nome)
@@ -211,6 +219,10 @@ export class LancamentoCadastroComponent {
       next: (lancamento) => {
         //this.lancamento = lancamento
         this.formulario.patchValue(lancamento);
+        if (this.formulario.get('urlAnexo')?.value)
+          this.formulario.patchValue({
+            urlAnexo: this.formulario.get('urlAnexo')?.value.replace('\\\\', 'https://')});
+      
         this.atualizarTitutloEdicao()
       }
     })
