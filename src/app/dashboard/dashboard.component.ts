@@ -41,7 +41,8 @@ export class DashboardComponent implements OnInit {
         min: 1,  // Começa do dia 1
         max: this.configurarDiaMes().length, // Define o último dia como o tamanho do array de dias
         ticks: {
-          stepSize: 1 // Exibe todos os dias do mês
+          stepSize: 1,
+          autoSkip: false // Exibe todos os dias do mês
         }
       }
     }
